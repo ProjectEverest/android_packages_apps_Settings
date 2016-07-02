@@ -84,4 +84,6 @@
      <!-- Running Services -->
      <string name="background_processes_settings_title">Process in background</string>
 
+     <!-- App details: open play store link if app is user installed -->
+     <string name="app_play_store">Play Store</string>
 </resources>
