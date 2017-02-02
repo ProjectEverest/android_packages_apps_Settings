@@ -488,4 +488,6 @@ public class Settings extends SettingsActivity {
 
     // BaseCamp Additoon
     public static class BaseCampActivity extends SettingsActivity {}
+
+    public static class DevRunningServicesActivity extends SettingsActivity { /* empty */ }
 }
