@@ -78,4 +78,7 @@
      <string name="base_camp_dash_title">Base Camp</string>
      <string name="base_camp_summary">Height of Customization!!</string>
 
+    <!-- Density category -->
+    <string name="density_category">Density options</string>
+
 </resources>
