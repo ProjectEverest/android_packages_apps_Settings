@@ -115,6 +115,12 @@
         android:order="-135"
         settings:controller="com.android.settings.notification.IncreasingRingVolumePreferenceController" />
 
+    <com.everest.support.preferences.SecureSettingSwitchPreference
+        android:key="volume_panel_on_left"
+        android:title="@string/volume_panel_on_left_title"
+        android:summary="@string/volume_panel_on_left_summary"
+        android:defaultValue="false" />
+
     <!-- TODO(b/174964721): make this a PrimarySwitchPreference -->
     <!-- Interruptions -->
     <com.android.settingslib.RestrictedPreference
