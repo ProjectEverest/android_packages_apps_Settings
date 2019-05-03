@@ -203,6 +203,8 @@ import com.google.android.settings.security.SecurityHubDashboard;
 
 import ink.kscope.settings.wifi.tether.WifiTetherClientManager;
 
+import com.android.settings.livedisplay.LiveDisplaySettings;
+
 public class SettingsGateway {
 
     /**
@@ -390,7 +392,8 @@ public class SettingsGateway {
             RunningServices.class.getName(),
             SleepMode.class.getName(),
             SecurityHubDashboard.class.getName(),
-            WifiTetherClientManager.class.getName()
+            WifiTetherClientManager.class.getName(),
+            LiveDisplaySettings.class.getName()
     };
 
     public static final String[] SETTINGS_FOR_RESTRICTED = {
