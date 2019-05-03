@@ -201,6 +201,8 @@ import com.base.camp.BaseCamp;
 
 import ink.kscope.settings.wifi.tether.WifiTetherClientManager;
 
+import com.android.settings.livedisplay.LiveDisplaySettings;
+
 public class SettingsGateway {
 
     /**
@@ -387,7 +389,8 @@ public class SettingsGateway {
             BaseCamp.class.getName(),
             RunningServices.class.getName(),
             SleepMode.class.getName(),
-            WifiTetherClientManager.class.getName()
+            WifiTetherClientManager.class.getName(),
+            LiveDisplaySettings.class.getName()
     };
 
     public static final String[] SETTINGS_FOR_RESTRICTED = {
