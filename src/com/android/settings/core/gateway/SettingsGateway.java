@@ -196,6 +196,8 @@ import com.android.settings.wifi.tether.WifiTetherSettings;
 
 import com.base.camp.BaseCamp;
 
+import com.android.settings.livedisplay.LiveDisplaySettings;
+
 public class SettingsGateway {
 
     /**
@@ -379,6 +381,7 @@ public class SettingsGateway {
             BaseCamp.class.getName(),
             RunningServices.class.getName(),
             SleepMode.class.getName(),
+            LiveDisplaySettings.class.getName(),
     };
 
     public static final String[] SETTINGS_FOR_RESTRICTED = {
