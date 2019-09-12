@@ -29,7 +29,9 @@ import com.android.settings.core.BasePreferenceController;
 public class EverestVersionPreferenceController extends BasePreferenceController {
 
     @VisibleForTesting
-    static final String EVEREST_VERSION_PROPERTY = "ro.everest.display.version";
+    static final String EVEREST_VERSION_PROPERTY = "ro.everest.base.version";
+    static final String EVEREST_BUILDTYPE_PROPERTY = "ro.everest.buildtype";
+    static final String EVEREST_EDITION_PROPERTY = "ro.everest.edition";
 
     public EverestVersionPreferenceController(Context context, String preferenceKey) {
         super(context, preferenceKey);
@@ -37,12 +39,20 @@ public class EverestVersionPreferenceController extends BasePreferenceController
 
     @Override
     public int getAvailabilityStatus() {
-        return !TextUtils.isEmpty(SystemProperties.get(EVEREST_VERSION_PROPERTY)) ? AVAILABLE : UNSUPPORTED_ON_DEVICE;
+        return !TextUtils.isEmpty(SystemProperties.get(EVEREST_VERSION_PROPERTY)) && !TextUtils.isEmpty(SystemProperties.get(EVEREST_BUILDTYPE_PROPERTY)) && !TextUtils.isEmpty(SystemProperties.get(EVEREST_EDITION_PROPERTY))
+                ? AVAILABLE : UNSUPPORTED_ON_DEVICE;
     }
 
     @Override
     public CharSequence getSummary() {
-        return SystemProperties.get(EVEREST_VERSION_PROPERTY,
-                mContext.getString(R.string.device_info_default));
+        String everestVersion = SystemProperties.get(EVEREST_VERSION_PROPERTY);
+        String everestBuildType = SystemProperties.get(EVEREST_BUILDTYPE_PROPERTY);
+        String everestEdition = SystemProperties.get(EVEREST_EDITION_PROPERTY);
+        if (!everestVersion.isEmpty() && !everestBuildType.isEmpty() && !everestEdition.isEmpty()) {
+            return everestVersion + " | " + everestBuildType + " | " + everestEdition;
+        } else {
+            return
+                mContext.getString(R.string.device_info_default);
+        }
     }
 }
