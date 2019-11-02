@@ -299,4 +299,8 @@
     <string name="custom_timeout_summary_10mins">10 minutes</string>
     <string name="custom_timeout_summary_20mins">20 minutes</string>
     <string name="custom_timeout_summary_30mins">30 minutes</string>
+    
+    <!-- Android debugging as root -->
+    <string name="adb_enable_root">Rooted debugging</string>
+    <string name="adb_enable_summary_root">Allow running Android debugging as root</string>
 </resources>
