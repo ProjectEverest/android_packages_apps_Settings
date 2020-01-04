@@ -67,6 +67,7 @@ android_library {
         "res-export", // for external usage
         "res-product",
         "BaseCamp/res",
+        "TouchGestures/res",
     ],
     static_libs: [
         // External dependencies
