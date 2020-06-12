@@ -81,7 +81,6 @@
     <com.android.settings.widget.HomepagePreference
         android:key="top_level_base_camp"
         android:title="@string/base_camp_dash_title"
-        android:summary="@string/base_camp_summary"
         android:icon="@drawable/ic_settings_everest"
         android:order="-110"
         android:fragment="com.base.camp.BaseCamp"/>
