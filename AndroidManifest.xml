@@ -5108,11 +5108,24 @@
             android:icon="@drawable/ic_homepage_everest"
             android:exported="true"
             android:parentActivityName="com.android.settings">
+
             <intent-filter>
                 <action android:name="com.android.settings.action.SETTINGS" />
             </intent-filter>
             <meta-data android:name="com.android.settings.FRAGMENT_CLASS"
                 android:value="com.base.camp.BaseCamp" />
+        </activity>
+
+        <activity android:name=".backup.transport.TransportActivity"
+                  android:label="@string/backup_transport_title"
+                  android:icon="@drawable/ic_settings_backup"
+                  android:exported="false">
+            <intent-filter>
+                <action android:name="android.intent.action.VIEW" />
+                <category android:name="android.intent.category.DEFAULT" />
+                <data android:scheme="settings"
+                      android:host="com.android.settings.backup.transport" />
+            </intent-filter>
         </activity>
         
         <!-- App lock -->
