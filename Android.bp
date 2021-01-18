@@ -125,6 +125,7 @@ android_library {
         "androidx.preference_preference-ktx",
         "androidx.dynamicanimation_dynamicanimation",
         "kotlin-stdlib",
+        "vendor.lineage.fastcharge-V1.0-java",
     ],
 
     plugins: ["androidx.room_room-compiler-plugin"],
