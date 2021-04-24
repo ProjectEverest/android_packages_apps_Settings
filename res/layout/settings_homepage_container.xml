@@ -26,6 +26,8 @@
     <com.android.settings.edgeeffect.SpringNestScrollView
         android:layout_width="match_parent"
         android:layout_height="match_parent"
+        android:scrollbarThumbVertical="@android:color/transparent"  
+    	android:scrollbarThumbHorizontal="@android:color/transparent"
         app:layout_behavior="com.android.settings.widget.HomepageAppBarScrollingViewBehavior">
         
         <androidx.core.widget.NestedScrollView
