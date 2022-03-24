@@ -77,6 +77,7 @@ android_library {
         "androidx.fragment_fragment",
         "androidx.fragment_fragment-ktx",
         "androidx.lifecycle_lifecycle-runtime-ktx",
+        "androidx.preference_preference-ktx",
         "guava",
 
         // Android internal dependencies
@@ -122,6 +123,7 @@ android_library {
         "kotlinx_coroutines",
         "androidx.preference_preference-ktx",
         "androidx.dynamicanimation_dynamicanimation",
+        "kotlin-stdlib",
     ],
 
     plugins: ["androidx.room_room-compiler-plugin"],
