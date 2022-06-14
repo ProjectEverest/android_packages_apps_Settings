@@ -63,4 +63,7 @@
      <string name="CUSTOM_BATTERY_INFO"></string>
      <string name="CUSTOM_STORAGE_INFO"></string>
      <string name="CUSTOM_RAM_INFO"></string>
+     
+     <!-- Max network scan search time in seconds -->
+    <integer name="config_network_scan_helper_max_search_time_sec">300</integer>
 </resources>
