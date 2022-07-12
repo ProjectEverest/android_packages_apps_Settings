@@ -71,9 +71,6 @@
      <string name="storage_warning_internal">Warning: This option may not work properly or lead to
           data loss and is therefore not recommended!</string>
 
-     <!-- Summary for list to control apps that ignore battery saving restrictions -->
-     <string name="high_power_apps_summary">Battery optimization availability</string>
-
      <!-- Base Camp -->
      <string name="base_camp_dash_title">Base Camp</string>
      <string name="base_camp_summary">Height of Customization!!</string>
@@ -437,4 +434,7 @@
     <!-- Misc gesture settings -->
     <string name="back_gesture_haptic_title">Haptic feedback</string>
     <string name="back_gesture_haptic_summary">Enable haptic tick effect on back gesture</string>
+    
+    <!-- Summary for list to control apps that ignore battery saving restrictions -->
+    <string name="high_power_apps_summary">Battery optimization availability</string>
 </resources>
