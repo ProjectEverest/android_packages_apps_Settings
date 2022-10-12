@@ -186,10 +186,10 @@ public class WifiEnabler implements SwitchWidgetController.OnSwitchChangeListene
             return true;
         }
         // Show toast message if Wi-Fi is not allowed in airplane mode
-        if (isChecked && !WirelessUtils.isRadioAllowed(mContext, Settings.Global.RADIO_WIFI)) {
+        if (!WirelessUtils.isRadioAllowed(mContext, Settings.Global.RADIO_WIFI)) {
             Toast.makeText(mContext, R.string.wifi_in_airplane_mode, Toast.LENGTH_SHORT).show();
-            // Reset switch to off. No infinite check/listener loop.
-            mSwitchWidget.setChecked(false);
+            // Reset switch status.
+            mSwitchWidget.setChecked(!isChecked);
             return false;
         }
 
