@@ -32,5 +32,12 @@
             settings:controller="com.android.settings.other.SensorsOffPreferenceController" />
 
     </PreferenceCategory>
+    
+    <SwitchPreference
+            android:key="wifi_non_persistent_mac_randomization"
+            android:title="@string/wifi_non_persistent_mac_randomization"
+            android:summary="@string/wifi_non_persistent_mac_randomization_summary"
+            settings:highlightableMenuKey="@string/menu_key_system"
+            settings:controller="com.android.settings.other.WifiNonPersistentMacRandomizationPreferenceController" />
 
 </PreferenceScreen>
