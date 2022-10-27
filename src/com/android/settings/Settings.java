@@ -480,4 +480,9 @@ public class Settings extends SettingsActivity {
     public static class PreviouslyConnectedDeviceActivity extends SettingsActivity { /* empty */ }
 
     public static class ScreenTimeoutActivity extends SettingsActivity { /* empty */ }
+
+    /**
+     * Activity for PreviouslyConnectedDeviceDashboardFragment
+     */
+    public static class PreviouslyConnectedDevicesActivity extends SettingsActivity { /* empty */ }
 }
