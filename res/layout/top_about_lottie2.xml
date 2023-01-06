@@ -1,0 +1,70 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:card_view="http://schemas.android.com/apk/res-auto"
+    android:background="@drawable/syberia_card"
+    android:layout_width="match_parent"
+    android:layout_height="174dp"
+    android:elevation="0dp"
+    android:layout_marginHorizontal="16dp"
+    android:layout_marginVertical="10dp">
+    
+    <androidx.cardview.widget.CardView
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            app:cardCornerRadius="24dp"
+            android:elevation="0dp">
+
+            <ImageView
+                android:id="@+id/roundedImageView"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:src="@drawable/wallpaper"
+                android:scaleType="fitXY"
+                />           
+
+       <LinearLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:gravity="center_horizontal"
+        android:orientation="horizontal"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintTop_toTopOf="parent">
+
+        <com.airbnb.lottie.LottieAnimationView
+            android:id="@+id/lottie_animation"
+            android:layout_width="180dp"
+            android:layout_height="180dp"
+            android:layout_gravity="center"
+            android:clickable="false"
+            app:lottie_rawRes="@raw/kiki"
+            app:lottie_loop="true"
+            app:lottie_autoPlay="true" />
+            
+        <RelativeLayout
+            android:layout_width="0.0dip"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="10dp"
+            android:layout_marginTop="10dp"
+            android:layout_marginBottom="10dp"
+            android:layout_weight="1.0"
+            android:layout_marginEnd="10dp">
+            <TextView
+                android:ellipsize="marquee"
+                android:id="@android:id/summary"
+                android:fadingEdge="horizontal"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="64.0dip"
+                android:textAlignment="center"
+                android:background="@drawable/homepage_text_bg"
+            	android:paddingHorizontal="8dp"
+            	android:paddingVertical="2dp"
+                android:singleLine="true"
+                android:textColor="#000000"
+                android:textSize="20sp"
+                style="@style/op_control_text_style_h6" />
+        </RelativeLayout>
+    </LinearLayout>
+  </androidx.cardview.widget.CardView>               
+</FrameLayout>

@@ -78,5 +78,8 @@
     <!-- Settings Header -->
     <color name="op_control_text_color_secondary">#89ffffff</color>
     <color name="op_control_text_color_primary">#ffffffff</color>
+    <color name="user_crd_bg">@android:color/system_neutral1_800</color>
+    <color name="acc3">@android:color/system_accent2_200</color>
+    <color name="acc2">@android:color/system_accent2_700</color>
 </resources>
 

@@ -2,7 +2,7 @@
 <FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
-    android:background="@drawable/everest_card"
+    android:background="@drawable/syberia_card"
     android:layout_height="80dp"
     android:elevation="0dp"
     android:layout_marginHorizontal="16dp"
@@ -14,7 +14,7 @@
          app:cardElevation="0dp"
          app:strokeColor="?android:attr/textColorPrimary"
          app:strokeWidth="4dp"
-         app:cardCornerRadius="32dp">
+         app:cardCornerRadius="30dp">
 
         <com.radiant.utils.bannerHeaderView
             android:layout_width="match_parent"
