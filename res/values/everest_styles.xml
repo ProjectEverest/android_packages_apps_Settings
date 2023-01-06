@@ -56,4 +56,13 @@
         <item name="android:lineSpacingMultiplier">1.3</item>
         <item name="android:fontFamily">sans-serif-book</item>
     </style>
+
+    <style name="op_control_text_style_base">
+        <item name="android:breakStrategy">simple</item>
+    </style>
+    
+    <style name="op_control_text_style_h6" parent="@style/op_control_text_style_base">
+        <item name="android:textSize">18.0sp</item>
+        <item name="android:fontFamily">@*android:string/config_headlineFontFamilyMedium</item>
+    </style>
 </resources>

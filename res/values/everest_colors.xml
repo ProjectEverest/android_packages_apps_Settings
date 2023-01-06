@@ -25,4 +25,14 @@
     <color name="homepage_blaze_background">#536dfe</color>
     <color name="xd_background1">@android:color/system_neutral1_50</color>
     
+    <color name="header_txt_bg">@*android:color/system_accent1_300</color>
+    <color name="op_control_text_color_primary_inverse">@*android:color/system_neutral2_800</color>
+    <color name="bg_accent">@*android:color/system_accent1_200</color>
+    <color name="acc3">@android:color/system_accent1_600</color>
+    <color name="acc2">@android:color/system_accent2_100</color>
+    <color name="user_crd_bg">@android:color/system_neutral1_0</color>
+    
+    <!-- Color for Settings Header -->
+    <color name="settingsHeaderColor">@*android:color/accent_device_default_light</color>
+    <color name="op_control_text_color_primary">#d8000000</color>
 </resources>

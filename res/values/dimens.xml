@@ -93,9 +93,10 @@
     <dimen name="search_bar_title_padding_start_regular_two_pane">8dp</dimen>
 
     <!-- Avatar -->
-    <dimen name="avatar_length">48dp</dimen>
+    <dimen name="avatar_length">50dp</dimen>
     <dimen name="avatar_margin_top">56dp</dimen>
-    <dimen name="avatar_margin_end">24dp</dimen>
+    <dimen name="avatar_margin_end">14dp</dimen>
+    <dimen name="avatar_margin">24dp</dimen>
     <dimen name="multiple_users_avatar_size">20dp</dimen>
     <dimen name="multiple_users_user_icon_size">40dp</dimen>
 
@@ -103,7 +104,7 @@
     <!-- avatar_length + avatar_margin_top -->
     <dimen name="homepage_title_margin_top">104dp</dimen>
     <dimen name="homepage_title_margin_bottom">8dp</dimen>
-    <dimen name="homepage_title_margin_horizontal">24dp</dimen>
+    <dimen name="homepage_title_margin_horizontal">14dp</dimen>
     <dimen name="homepage_padding_horizontal_two_pane">24dp</dimen>
     <dimen name="homepage_preference_corner_radius">28dp</dimen>
     <dimen name="homepage_preference_min_height">88sp</dimen>
