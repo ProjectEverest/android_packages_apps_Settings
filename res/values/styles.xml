@@ -982,6 +982,10 @@
         <item name="android:layout_alignParentTop">true</item>
     </style>
     
+    <style name="TextAppearance.HomepagePreferenceTitle" parent="@android:style/TextAppearance.DeviceDefault">
+        <item name="android:textSize">22sp</item>
+    </style>
+    
     <style name="HomepageTitleText" parent="CollapsingToolbarTitle.Expanded">
         <item name="android:layout_width">wrap_content</item>
         <item name="android:layout_height">wrap_content</item>

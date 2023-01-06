@@ -75,7 +75,7 @@
             android:layout_height="wrap_content"
             android:orientation="vertical"
             android:gravity="bottom"
-            app:layout_scrollFlags="scroll|exitUntilCollapsed">
+            app:layout_scrollFlags="scroll">
 
             <include
                 android:id="@+id/homepage_app_bar_regular_phone_view"
