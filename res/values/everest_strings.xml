@@ -426,6 +426,7 @@
     <string name="custom_vibration_pattern_summary">Set a custom vibration pattern</string>
     
     <!-- Other Fragment -->
+    <string name="miscellaneous_settings">Miscellaneous</string>
     <string name="other_settings">Other options</string>
     <string name="quick_settings">Quick Settings</string>
 </resources>
