@@ -190,14 +190,14 @@ public class MobileNetworkUtilsTest {
 
     @Test
     public void isCdmaOptions_phoneTypeCdma_returnTrue() {
-        when(mTelephonyManager.getPhoneType()).thenReturn(TelephonyManager.PHONE_TYPE_CDMA);
+        when(mTelephonyManager.getCurrentPhoneType()).thenReturn(TelephonyManager.PHONE_TYPE_CDMA);
 
         assertThat(MobileNetworkUtils.isCdmaOptions(mContext, SUB_ID_1)).isTrue();
     }
 
     @Test
     public void isCdmaOptions_worldModeWithGsmWcdma_returnTrue() {
-        when(mTelephonyManager.getPhoneType()).thenReturn(TelephonyManager.PHONE_TYPE_GSM);
+        when(mTelephonyManager.getCurrentPhoneType()).thenReturn(TelephonyManager.PHONE_TYPE_GSM);
         mCarrierConfig.putBoolean(CarrierConfigManager.KEY_WORLD_MODE_ENABLED_BOOL, true);
         // NETWORK_MODE_LTE_GSM_WCDMA = LTE | GSM | WCDMA
         when(mTelephonyManager.getAllowedNetworkTypesForReason(
@@ -209,7 +209,6 @@ public class MobileNetworkUtilsTest {
 
     @Test
     public void isCdmaOptions_carrierWorldModeWithoutHideCarrier_returnTrue() {
-        when(mTelephonyManager.getPhoneType()).thenReturn(TelephonyManager.PHONE_TYPE_GSM);
         mCarrierConfig.putBoolean(CarrierConfigManager.KEY_HIDE_CARRIER_NETWORK_SETTINGS_BOOL,
                 false);
         mCarrierConfig.putBoolean(CarrierConfigManager.KEY_WORLD_PHONE_BOOL, true);
@@ -247,7 +246,7 @@ public class MobileNetworkUtilsTest {
                 false);
         mCarrierConfig.putBoolean(CarrierConfigManager.KEY_OPERATOR_SELECTION_EXPAND_BOOL, true);
         mCarrierConfig.putBoolean(CarrierConfigManager.KEY_CSP_ENABLED_BOOL, false);
-        when(mTelephonyManager.getPhoneType()).thenReturn(TelephonyManager.PHONE_TYPE_GSM);
+        when(mTelephonyManager.getCurrentPhoneType()).thenReturn(TelephonyManager.PHONE_TYPE_GSM);
 
         assertThat(MobileNetworkUtils.shouldDisplayNetworkSelectOptions(mContext, SUB_ID_1))
                 .isTrue();

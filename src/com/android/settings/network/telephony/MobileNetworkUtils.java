@@ -393,7 +393,7 @@ public class MobileNetworkUtils {
 
         final TelephonyManager telephonyManager = context.getSystemService(TelephonyManager.class)
                 .createForSubscriptionId(subId);
-        if (telephonyManager.getPhoneType() == TelephonyManager.PHONE_TYPE_CDMA) {
+        if (telephonyManager.getCurrentPhoneType() == TelephonyManager.PHONE_TYPE_CDMA) {
             return true;
         }
 
@@ -458,7 +458,7 @@ public class MobileNetworkUtils {
 
         final TelephonyManager telephonyManager = context.getSystemService(TelephonyManager.class)
                 .createForSubscriptionId(subId);
-        if (telephonyManager.getPhoneType() == TelephonyManager.PHONE_TYPE_GSM) {
+        if (telephonyManager.getCurrentPhoneType() == TelephonyManager.PHONE_TYPE_GSM) {
             return true;
         }
 

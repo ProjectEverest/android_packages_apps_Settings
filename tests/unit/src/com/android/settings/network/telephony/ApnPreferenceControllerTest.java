@@ -96,7 +96,7 @@ public class ApnPreferenceControllerTest {
 
     @Test
     public void getAvailabilityStatus_apnSettingsSupportedWithCDMA_returnAvailable() {
-        doReturn(TelephonyManager.PHONE_TYPE_CDMA).when(mTelephonyManager).getPhoneType();
+        doReturn(TelephonyManager.PHONE_TYPE_CDMA).when(mTelephonyManager).getCurrentPhoneType();
         final PersistableBundle bundle = new PersistableBundle();
         bundle.putBoolean(CarrierConfigManager.KEY_SHOW_APN_SETTING_CDMA_BOOL, true);
         doReturn(bundle).when(mCarrierConfigCache).getConfigForSubId(SUB_ID);
@@ -106,7 +106,7 @@ public class ApnPreferenceControllerTest {
 
     @Test
     public void getAvailabilityStatus_apnSettingsSupportedWithGsm_returnAvailable() {
-        doReturn(TelephonyManager.PHONE_TYPE_GSM).when(mTelephonyManager).getPhoneType();
+        doReturn(TelephonyManager.PHONE_TYPE_GSM).when(mTelephonyManager).getCurrentPhoneType();
         final PersistableBundle bundle = new PersistableBundle();
         bundle.putBoolean(CarrierConfigManager.KEY_APN_EXPAND_BOOL, true);
         doReturn(bundle).when(mCarrierConfigCache).getConfigForSubId(SUB_ID);
@@ -116,7 +116,7 @@ public class ApnPreferenceControllerTest {
 
     @Test
     public void getAvailabilityStatus_carrierConfigNull_returnUnavailable() {
-        doReturn(TelephonyManager.PHONE_TYPE_GSM).when(mTelephonyManager).getPhoneType();
+        doReturn(TelephonyManager.PHONE_TYPE_GSM).when(mTelephonyManager).getCurrentPhoneType();
         when(mCarrierConfigCache.getConfigForSubId(SUB_ID)).thenReturn(null);
 
         assertThat(mController.getAvailabilityStatus()).isEqualTo(CONDITIONALLY_UNAVAILABLE);
@@ -124,7 +124,7 @@ public class ApnPreferenceControllerTest {
 
     @Test
     public void getAvailabilityStatus_hideCarrierNetworkSettings_returnUnavailable() {
-        doReturn(TelephonyManager.PHONE_TYPE_GSM).when(mTelephonyManager).getPhoneType();
+        doReturn(TelephonyManager.PHONE_TYPE_GSM).when(mTelephonyManager).getCurrentPhoneType();
         final PersistableBundle bundle = new PersistableBundle();
         bundle.putBoolean(CarrierConfigManager.KEY_APN_EXPAND_BOOL, true);
         bundle.putBoolean(CarrierConfigManager.KEY_HIDE_CARRIER_NETWORK_SETTINGS_BOOL, true);

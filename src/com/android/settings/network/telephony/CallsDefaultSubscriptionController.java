@@ -21,6 +21,7 @@ import android.telephony.SubscriptionManager;
 
 import androidx.lifecycle.LifecycleOwner;
 
+import com.android.settings.Utils;
 import com.android.settingslib.core.lifecycle.Lifecycle;
 import com.android.settingslib.mobile.dataservice.SubscriptionInfoEntity;
 
@@ -52,5 +53,13 @@ public class CallsDefaultSubscriptionController extends DefaultSubscriptionContr
     public CharSequence getSummary() {
         return MobileNetworkUtils.getPreferredStatus(isRtlMode(), mContext, true,
                 mSubInfoEntityList);
+    }
+
+    @Override
+    public int getAvailabilityStatus(int subId) {
+        if (!Utils.isVoiceCapable(mContext)) {
+            return UNSUPPORTED_ON_DEVICE;
+        }
+        return super.getAvailabilityStatus(subId);
     }
 }

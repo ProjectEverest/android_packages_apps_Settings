@@ -92,7 +92,7 @@ public class CarrierPreferenceControllerTest {
 
     @Test
     public void getAvailabilityStatus_cdmaWithFlagOff_returnUnavailable() {
-        doReturn(TelephonyManager.PHONE_TYPE_CDMA).when(mTelephonyManager).getPhoneType();
+        doReturn(TelephonyManager.PHONE_TYPE_CDMA).when(mTelephonyManager).getCurrentPhoneType();
         final PersistableBundle bundle = new PersistableBundle();
         bundle.putBoolean(CarrierConfigManager.KEY_CARRIER_SETTINGS_ENABLE_BOOL, false);
         doReturn(bundle).when(mCarrierConfigCache).getConfigForSubId(SUB_ID);
@@ -102,7 +102,7 @@ public class CarrierPreferenceControllerTest {
 
     @Test
     public void getAvailabilityStatus_cdmaWithFlagOnreturnAvailable() {
-        doReturn(TelephonyManager.PHONE_TYPE_CDMA).when(mTelephonyManager).getPhoneType();
+        doReturn(TelephonyManager.PHONE_TYPE_CDMA).when(mTelephonyManager).getCurrentPhoneType();
         final PersistableBundle bundle = new PersistableBundle();
         bundle.putBoolean(CarrierConfigManager.KEY_CARRIER_SETTINGS_ENABLE_BOOL, true);
         doReturn(bundle).when(mCarrierConfigCache).getConfigForSubId(SUB_ID);
@@ -112,7 +112,7 @@ public class CarrierPreferenceControllerTest {
 
     @Test
     public void getAvailabilityStatus_gsmWithFlagOnreturnAvailable() {
-        doReturn(TelephonyManager.PHONE_TYPE_GSM).when(mTelephonyManager).getPhoneType();
+        doReturn(TelephonyManager.PHONE_TYPE_GSM).when(mTelephonyManager).getCurrentPhoneType();
         final PersistableBundle bundle = new PersistableBundle();
         bundle.putBoolean(CarrierConfigManager.KEY_CARRIER_SETTINGS_ENABLE_BOOL, true);
         doReturn(bundle).when(mCarrierConfigCache).getConfigForSubId(SUB_ID);

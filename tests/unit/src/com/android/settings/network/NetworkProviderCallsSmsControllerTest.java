@@ -26,6 +26,7 @@ import static org.mockito.Mockito.when;
 
 import android.content.Context;
 import android.os.Looper;
+import android.os.UserManager;
 import android.telephony.SubscriptionInfo;
 import android.telephony.SubscriptionManager;
 import android.telephony.TelephonyManager;
@@ -74,6 +75,10 @@ public class NetworkProviderCallsSmsControllerTest {
     private SubscriptionInfoEntity mSubInfo1;
     @Mock
     private SubscriptionInfoEntity mSubInfo2;
+    @Mock
+    private TelephonyManager mTelephonyManager;
+    @Mock
+    private UserManager mUserManager;
     @Mock
     private Lifecycle mLifecycle;
     @Mock
@@ -149,6 +154,9 @@ public class NetworkProviderCallsSmsControllerTest {
             Looper.prepare();
         }
 
+        when(mContext.getSystemService(UserManager.class)).thenReturn(mUserManager);
+        when(mContext.getSystemService(TelephonyManager.class)).thenReturn(mTelephonyManager);
+        when(mUserManager.isAdminUser()).thenReturn(true);
         mPreferenceManager = new PreferenceManager(mContext);
         mPreferenceScreen = mPreferenceManager.createPreferenceScreen(mContext);
         mPreference = new RestrictedPreference(mContext);
@@ -356,5 +364,19 @@ public class NetworkProviderCallsSmsControllerTest {
                 .append(DISPLAY_NAME_2);
 
         assertTrue(TextUtils.equals(mController.getSummary(), summary));
+    }
+
+    @Test
+    public void isAvailable_isVoiceCapable_shouldReturnTrue() {
+        when(mTelephonyManager.isVoiceCapable()).thenReturn(true);
+
+        assertThat(mController.isAvailable()).isTrue();
+    }
+
+    @Test
+    public void isAvailable_isNotVoiceCapable_shouldReturnFalse() {
+        when(mTelephonyManager.isVoiceCapable()).thenReturn(false);
+
+        assertThat(mController.isAvailable()).isFalse();
     }
 }

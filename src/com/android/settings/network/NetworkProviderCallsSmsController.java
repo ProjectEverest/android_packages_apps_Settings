@@ -34,8 +34,8 @@ import androidx.preference.Preference;
 import androidx.preference.PreferenceScreen;
 
 import com.android.settings.R;
+import com.android.settings.Utils;
 import com.android.settingslib.RestrictedPreference;
-import com.android.settingslib.Utils;
 import com.android.settingslib.core.AbstractPreferenceController;
 import com.android.settingslib.core.lifecycle.Lifecycle;
 import com.android.settingslib.mobile.dataservice.SubscriptionInfoEntity;
@@ -198,7 +198,7 @@ public class NetworkProviderCallsSmsController extends AbstractPreferenceControl
     @Override
     public boolean isAvailable() {
         return SubscriptionUtil.isSimHardwareVisible(mContext) &&
-                mUserManager.isAdminUser();
+                Utils.isVoiceCapable(mContext) && mUserManager.isAdminUser();
     }
 
     @Override
