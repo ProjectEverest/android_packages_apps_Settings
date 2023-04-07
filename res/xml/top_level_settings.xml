@@ -55,7 +55,7 @@
         android:title="@string/base_camp_dash_title"
         android:summary="@string/base_camp_summary"
         android:icon="@drawable/ic_settings_everest"
-        android:order="-130"
+        android:order="-170"
         android:fragment="com.base.camp.BaseCamp"/>
 
     <com.android.settings.widget.HomepagePreference
