@@ -34,5 +34,14 @@
         <item name="android:textSize">15dp</item>
         <item name="android:textColor">@color/settingslib_text_color_primary_device_default</item>
     </style>
+
+    <style name="text_style" parent="@style/text_style_base">
+        <item name="android:textSize">24.0sp</item>
+        <item name="android:fontFamily">@*android:string/config_headlineFontFamilyMedium</item>
+    </style>
+
+    <style name="text_style_base">
+        <item name="android:breakStrategy">simple</item>
+    </style>
     
 </resources>
