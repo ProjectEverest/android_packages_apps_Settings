@@ -16,6 +16,9 @@
 <resources
     xmlns:androidprv="http://schemas.android.com/apk/prv/res/android">
 
+    <!-- Dashboard -->
     <color name="homepage_everest_background">#FFCD00</color>
     <color name="everest_accent_ripple">@android:color/system_accent1_500</color>
+    <color name="abt_crd">@android:color/system_neutral1_0</color>
+
 </resources>
