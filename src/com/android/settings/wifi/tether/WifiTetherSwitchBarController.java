@@ -17,16 +17,11 @@
 package com.android.settings.wifi.tether;
 
 import static android.net.ConnectivityManager.TETHERING_WIFI;
-import static android.net.wifi.WifiManager.EXTRA_WIFI_AP_STATE;
 import static android.net.wifi.WifiManager.WIFI_AP_STATE_DISABLING;
 import static android.net.wifi.WifiManager.WIFI_AP_STATE_ENABLED;
 import static android.net.wifi.WifiManager.WIFI_AP_STATE_ENABLING;
-import static android.net.wifi.WifiManager.WIFI_AP_STATE_FAILED;
 
-import android.content.BroadcastReceiver;
 import android.content.Context;
-import android.content.Intent;
-import android.content.IntentFilter;
 import android.net.ConnectivityManager;
 import android.net.wifi.WifiManager;
 import android.os.Handler;
@@ -50,12 +45,12 @@ public class WifiTetherSwitchBarController implements
         LifecycleObserver, OnStart, OnStop, DataSaverBackend.Listener, OnCheckedChangeListener {
 
     private static final String TAG = "WifiTetherSBC";
-    private static final IntentFilter WIFI_INTENT_FILTER;
 
     private final Context mContext;
     private final SettingsMainSwitchBar mSwitchBar;
     private final ConnectivityManager mConnectivityManager;
     private final WifiManager mWifiManager;
+    private final SoftApCallback mSoftApCallback = new SoftApCallback();
 
     @VisibleForTesting
     DataSaverBackend mDataSaverBackend;
@@ -69,10 +64,6 @@ public class WifiTetherSwitchBarController implements
                     handleWifiApStateChanged(mWifiManager.getWifiApState());
                 }
             };
-
-    static {
-        WIFI_INTENT_FILTER = new IntentFilter(WifiManager.WIFI_AP_STATE_CHANGED_ACTION);
-    }
 
     WifiTetherSwitchBarController(Context context, SettingsMainSwitchBar switchBar) {
         mContext = context;
@@ -89,15 +80,18 @@ public class WifiTetherSwitchBarController implements
     public void onStart() {
         mDataSaverBackend.addListener(this);
         mSwitchBar.addOnSwitchChangeListener(this);
-        mContext.registerReceiver(mReceiver, WIFI_INTENT_FILTER,
-                Context.RECEIVER_EXPORTED_UNAUDITED);
+
+        // use callback to replace broadcast
+        mWifiManager.registerSoftApCallback(mContext.getApplicationContext().getMainExecutor(),
+                mSoftApCallback);
+
         handleWifiApStateChanged(mWifiManager.getWifiApState());
     }
 
     @Override
     public void onStop() {
         mDataSaverBackend.remListener(this);
-        mContext.unregisterReceiver(mReceiver);
+        mWifiManager.unregisterSoftApCallback(mSoftApCallback);
     }
 
     @Override
@@ -135,17 +129,6 @@ public class WifiTetherSwitchBarController implements
         return false;
     }
 
-    private final BroadcastReceiver mReceiver = new BroadcastReceiver() {
-        @Override
-        public void onReceive(Context context, Intent intent) {
-            String action = intent.getAction();
-            if (WifiManager.WIFI_AP_STATE_CHANGED_ACTION.equals(action)) {
-                final int state = intent.getIntExtra(EXTRA_WIFI_AP_STATE, WIFI_AP_STATE_FAILED);
-                handleWifiApStateChanged(state);
-            }
-        }
-    };
-
     @VisibleForTesting
     void handleWifiApStateChanged(int state) {
         if (state == WIFI_AP_STATE_ENABLING || state == WIFI_AP_STATE_DISABLING) return;
@@ -174,5 +157,13 @@ public class WifiTetherSwitchBarController implements
     @Override
     public void onDenylistStatusChanged(int uid, boolean isDenylisted) {
         // we don't care, since we just want to read the value
+    }
+
+    private class SoftApCallback implements WifiManager.SoftApCallback {
+        @Override
+        public void onStateChanged(int state, int failureReason) {
+            Log.d(TAG, "onStateChanged(), state:" + state + ", failureReason:" + failureReason);
+            handleWifiApStateChanged(state);
+        }
     }
 }
