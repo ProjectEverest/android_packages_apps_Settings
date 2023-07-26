@@ -18,6 +18,11 @@
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:settings="http://schemas.android.com/apk/res-auto"
     android:title="@string/privacy_settings_title">
+    
+    <com.android.settingslib.widget.IllustrationPreference
+            android:key="privacy_illustration"
+            android:order="-1001"
+            settings:lottie_rawRes="@raw/privacy_illustration"/>
 
     <!-- Backup settings -->
     <Preference
