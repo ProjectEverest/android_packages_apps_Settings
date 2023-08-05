@@ -50,7 +50,7 @@ public class EverestInfoPreferenceController extends AbstractPreferenceControlle
         final TextView battery = (TextView) everestInfoPreference.findViewById(R.id.battery_type_message);
         final TextView infoScreen = (TextView) everestInfoPreference.findViewById(R.id.screen_message);
         processor.setText(EverestSpecUtils.getProcessorModel());
-        storage.setText(String.valueOf(EverestSpecUtils.getTotalInternalMemorySize()) + "GB ROM + " + String.valueOf(EverestSpecUtils.getTotalRAM()) + "GB RAM");
+        storage.setText(String.valueOf(EverestSpecUtils.getTotalInternalMemorySize()) + "GB ROM + " + EverestSpecUtils.getTotalRAM() + " RAM");
         battery.setText(EverestSpecUtils.getBatteryCapacity(mContext) + " mAh");
         infoScreen.setText(EverestSpecUtils.getScreenRes(mContext));
     }
