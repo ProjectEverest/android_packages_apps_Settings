@@ -23,7 +23,10 @@ import android.app.settings.SettingsEnums;
 import android.os.Bundle;
 import android.text.TextUtils;
 import android.util.Log;
+import android.view.View;
 
+import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
 import androidx.fragment.app.FragmentManager;
 import androidx.preference.Preference;
 import androidx.preference.PreferenceFragmentCompat;
@@ -47,9 +50,6 @@ public class SmartForwardingFragment extends PreferenceFragmentCompat
     @Override
     public void onCreatePreferences(Bundle savedInstanceState, String rootKey) {
         setPreferencesFromResource(R.xml.smart_forwarding_switch, rootKey);
-
-        String title = getResources().getString(R.string.smart_forwarding_title);
-        getActivity().getActionBar().setTitle(title);
 
         SwitchPreference smartForwardingSwitch = findPreference(KEY_SMART_FORWARDING_SWITCH);
         if (turnOffSwitch) {
@@ -84,6 +84,12 @@ public class SmartForwardingFragment extends PreferenceFragmentCompat
         return true;
     }
 
+    @Override
+    public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
+        super.onViewCreated(view, savedInstanceState);
+        String title = getResources().getString(R.string.smart_forwarding_title);
+        getActivity().getActionBar().setTitle(title);
+    }
 
     private void switchToMDNFragment() {
         FragmentManager fragmentManager = getActivity().getSupportFragmentManager();
