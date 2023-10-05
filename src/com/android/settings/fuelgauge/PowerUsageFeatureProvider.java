@@ -23,10 +23,12 @@ import android.util.ArrayMap;
 import android.util.SparseIntArray;
 
 import com.android.settings.fuelgauge.batteryusage.DetectRequestSourceType;
+import com.android.settings.fuelgauge.batteryusage.BatteryHistEntry;
 import com.android.settings.fuelgauge.batteryusage.PowerAnomalyEventList;
 import com.android.settingslib.fuelgauge.Estimate;
 
 import java.util.List;
+import java.util.Map;
 import java.util.Set;
 
 /** Feature Provider used in power usage */
@@ -92,6 +94,21 @@ public interface PowerUsageFeatureProvider {
      */
     String getOldEstimateDebugString(String timeRemaining);
 
+    /**
+     * Returns the string to show in the advanced usage battery page when enhanced estimates are
+     * enabled. This string notifies users that the estimate is using enhanced prediction.
+     */
+    String getAdvancedUsageScreenInfoString();
+
+    /**
+     * Returns a signal to indicate if the device will need to warn the user they may not make it
+     * to their next charging time.
+     *
+     * @param id Optional string used to identify the caller for metrics. Usually the class name of
+     *           the caller
+     */
+    boolean getEarlyWarningSignal(Context context, String id);
+
     /** Checks whether smart battery feature is supported in this device */
     boolean isSmartBatterySupported();
 
@@ -107,6 +124,11 @@ public interface PowerUsageFeatureProvider {
     /** Returns {@link Bundle} for settings anomaly detection result */
     PowerAnomalyEventList detectSettingsAnomaly(
             Context context, double displayDrain, DetectRequestSourceType detectRequestSourceType);
+
+    /**
+     * Returns battery history data with corresponding timestamp key.
+     */
+    Map<Long, Map<String, BatteryHistEntry>> getBatteryHistory(Context context);
 
     /** Gets an intent for one time bypass charge limited to resume charging. */
     Intent getResumeChargeIntent(boolean isDockDefender);
