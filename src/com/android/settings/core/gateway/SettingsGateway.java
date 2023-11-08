@@ -199,6 +199,8 @@ import com.android.settings.wifi.tether.WifiTetherSettings;
 
 import com.base.camp.BaseCamp;
 
+import com.google.android.settings.security.SecurityHubDashboard;
+
 public class SettingsGateway {
 
     /**
@@ -384,7 +386,8 @@ public class SettingsGateway {
             UserAspectRatioDetails.class.getName(),
             BaseCamp.class.getName(),
             RunningServices.class.getName(),
-            SleepMode.class.getName()
+            SleepMode.class.getName(),
+            SecurityHubDashboard.class.getName(),
     };
 
     public static final String[] SETTINGS_FOR_RESTRICTED = {

@@ -126,6 +126,7 @@ android_library {
         "androidx.dynamicanimation_dynamicanimation",
         "kotlin-stdlib",
         "vendor.lineage.fastcharge-V1.0-java",
+        "SettingsGoogle-lib",
     ],
 
     plugins: ["androidx.room_room-compiler-plugin"],
