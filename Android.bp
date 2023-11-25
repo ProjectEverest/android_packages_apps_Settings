@@ -67,6 +67,7 @@ android_library {
         "res-product",
         "BaseCamp/res",
         "TouchGestures/res",
+        "SettingsGoogle/res",
     ],
     static_libs: [
         "androidx-constraintlayout_constraintlayout",

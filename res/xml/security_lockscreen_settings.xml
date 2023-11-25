@@ -78,6 +78,12 @@
             android:key="customizable_lock_screen_quick_affordances"
             android:title="@string/lockscreen_quick_affordances_title"
             settings:controller="com.android.settings.display.CustomizableLockScreenQuickAffordancesPreferenceController" />
+
+        <SwitchPreference
+            android:key="lockscreen_show_weather_switch"
+            android:summary="@string/lockscreen_show_weather_summary"
+            android:title="@string/lockscreen_show_weather_title"
+            settings:controller="com.google.android.settings.display.LockscreenWeatherPreferenceController" />
     </PreferenceCategory>
 
     <PreferenceCategory
