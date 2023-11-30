@@ -73,4 +73,9 @@
 
      <!-- Summary for list to control apps that ignore battery saving restrictions -->
      <string name="high_power_apps_summary">Battery optimization availability</string>
+
+     <!-- Base Camp -->
+     <string name="base_camp_dash_title">Base Camp</string>
+     <string name="base_camp_summary">Height of Customization!!</string>
+
 </resources>
