@@ -22,6 +22,7 @@ import android.text.TextUtils;
 
 import androidx.preference.Preference;
 
+import com.android.settings.R;
 import com.android.settings.core.BasePreferenceController;
 import com.android.settings.overlay.FeatureFactory;
 import com.android.settings.overlay.SupportFeatureProvider;
@@ -32,9 +33,12 @@ public class SupportPreferenceController extends BasePreferenceController {
 
     private Activity mActivity;
 
+    private Context mContext;
+
     public SupportPreferenceController(Context context, String preferenceKey) {
         super(context, preferenceKey);
         mSupportFeatureProvider = FeatureFactory.getFeatureFactory().getSupportFeatureProvider();
+        mContext = context;
     }
 
     public void setActivity(Activity activity) {
@@ -43,7 +47,8 @@ public class SupportPreferenceController extends BasePreferenceController {
 
     @Override
     public int getAvailabilityStatus() {
-        return 3; //UNSUPPORTED_ON_DEVICE - from BasePreferenceController.java
+        boolean enabled = mContext.getResources().getBoolean(R.bool.config_support_enabled);
+        return mSupportFeatureProvider == null || !enabled ? UNSUPPORTED_ON_DEVICE : AVAILABLE;
     }
 
     @Override
