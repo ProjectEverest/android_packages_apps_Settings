@@ -104,6 +104,7 @@ android_library {
         "settings-telephony-protos-lite",
         "statslog-settings",
         "glide",
+        "VendorSupport-preference",
     ],
 
     plugins: ["androidx.room_room-compiler-plugin"],
