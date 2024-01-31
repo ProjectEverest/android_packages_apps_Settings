@@ -50,6 +50,12 @@
         settings:highlightableMenuKey="@string/menu_key_connected_devices"
         settings:controller="com.android.settings.connecteddevice.TopLevelConnectedDevicesPreferenceController"/>
 
+    <com.android.settingslib.widget.LayoutPreference
+        android:layout="@layout/usercard"
+        android:fragment="com.android.settings.users.UserSettings"
+        android:key="top_level_usercard"
+        android:order="-190" />
+
     <com.android.settings.widget.HomepagePreference
         android:key="top_level_base_camp"
         android:title="@string/base_camp_dash_title"

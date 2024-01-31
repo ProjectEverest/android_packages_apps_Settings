@@ -371,4 +371,6 @@
     <string name="battery_stats_reset">Reset stats</string>
     <string name="battery_stats_message">Battery history stats are going to be reset</string>    
 
+    <!-- User Card -->
+    <string name="usercard_summary">Current active user, tap for more information</string>
 </resources>
