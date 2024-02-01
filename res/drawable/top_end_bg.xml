@@ -4,7 +4,7 @@
     <solid android:color="@color/everest_pref_color" />
     <corners
         android:topLeftRadius="2dp"
-        android:topRightRadius="28dp"
-        android:bottomRightRadius="28dp"
+        android:topRightRadius="20dp"
+        android:bottomRightRadius="2dp"
         android:bottomLeftRadius="2dp" />
 </shape>
