@@ -38,6 +38,16 @@
         settings:enableCopying="true"
         settings:layout="@layout/everest_dashboard_preference_top" />
 
+    <!-- Android version -->
+    <Preference
+        android:fragment="com.android.settings.deviceinfo.firmwareversion.FirmwareVersionSettings"
+        android:icon="@drawable/ic_android_acc"
+        android:key="firmware_version"
+        android:summary="@string/summary_placeholder"
+        android:title="@string/firmware_version"
+        settings:controller="com.android.settings.deviceinfo.firmwareversion.FirmwareVersionPreferenceController"
+        settings:layout="@layout/everest_dashboard_preference_bottom" />
+
     <!-- Build number -->
     <Preference
         android:icon="@drawable/ic_build_acc"
@@ -46,7 +56,7 @@
         android:title="@string/build_number"
         settings:controller="com.android.settings.deviceinfo.BuildNumberPreferenceController"
         settings:enableCopying="true"
-        settings:layout="@layout/everest_dashboard_preference_middle" />
+        settings:layout="@layout/everest_dashboard_preference_top" />
 
     <!-- Model & hardware -->
     <Preference
@@ -58,16 +68,6 @@
         settings:controller="com.android.settings.deviceinfo.HardwareInfoPreferenceController"
         settings:enableCopying="true"
         settings:keywords="@string/keywords_model_and_hardware"
-        settings:layout="@layout/everest_dashboard_preference_middle" />
-
-    <!-- Android version -->
-    <Preference
-        android:fragment="com.android.settings.deviceinfo.firmwareversion.FirmwareVersionSettings"
-        android:icon="@drawable/ic_android_acc"
-        android:key="firmware_version"
-        android:summary="@string/summary_placeholder"
-        android:title="@string/firmware_version"
-        settings:controller="com.android.settings.deviceinfo.firmwareversion.FirmwareVersionPreferenceController"
         settings:layout="@layout/everest_dashboard_preference_bottom" />
 
     <!-- Bottom category -->

@@ -21,6 +21,10 @@
     android:title="@string/firmware_version"
     settings:keywords="@string/keywords_android_version">
 
+     <com.android.settingslib.widget.LayoutPreference
+        android:layout="@layout/everest_dashboard_banner_about"
+        android:key="everest_banner" />
+
     <!-- Device Name -->
     <Preference
         android:key="about_device_name"
@@ -31,26 +35,26 @@
         settings:enableCopying="true"
         settings:controller="com.android.settings.deviceinfo.firmwareversion.AboutDeviceNamePreferenceController"/>
 
-    <!-- Everest version -->
-    <Preference
-         android:key="everest_version"
-         android:title="@string/everest_version"
-         android:icon="@drawable/ic_settings_system_dashboard_acc"
-         android:summary="@string/summary_placeholder"
-         settings:layout="@layout/everest_dashboard_preference_middle"
-         settings:enableCopying="true"
-         settings:controller="com.android.settings.deviceinfo.firmwareversion.EverestVersionPreferenceController"/>
-
     <!-- Android version -->
     <Preference
         android:key="os_firmware_version"
         android:icon="@drawable/ic_android_acc"
         android:title="@string/firmware_version"
         android:summary="@string/summary_placeholder"
-        settings:layout="@layout/everest_dashboard_preference_middle"
+        settings:layout="@layout/everest_dashboard_preference_bottom"
         settings:enableCopying="true"
         settings:searchable="false"
         settings:controller="com.android.settings.deviceinfo.firmwareversion.FirmwareVersionDetailPreferenceController"/>
+
+    <!-- Everest version -->
+    <Preference
+         android:key="everest_version"
+         android:title="@string/everest_version"
+         android:icon="@drawable/ic_settings_system_dashboard_acc"
+         android:summary="@string/summary_placeholder"
+         settings:layout="@layout/everest_dashboard_preference_top"
+         settings:enableCopying="true"
+         settings:controller="com.android.settings.deviceinfo.firmwareversion.EverestVersionPreferenceController"/>
 
     <!-- EverestOS Maintainer -->
     <Preference
@@ -66,6 +70,7 @@
     <Preference
         android:key="security_key"
         android:title="@string/security_patch"
+        android:icon="@drawable/security"
         settings:layout="@layout/everest_dashboard_preference_top"
         settings:enableCopying="true"
         settings:controller="com.android.settings.deviceinfo.firmwareversion.SecurityPatchLevelPreferenceController"/>
@@ -83,7 +88,8 @@
         android:key="base_band"
         android:title="@string/baseband_version"
         android:summary="@string/summary_placeholder"
-        settings:layout="@layout/everest_dashboard_preference_middle"
+        android:icon="@drawable/baseband"
+        settings:layout="@layout/everest_dashboard_preference_bottom"
         settings:enableCopying="true"
         settings:controller="com.android.settings.deviceinfo.firmwareversion.BasebandVersionPreferenceController"/>
         
@@ -92,7 +98,8 @@
         android:key="kernel_version"
         android:title="@string/kernel_version"
         android:summary="@string/summary_placeholder"
-        settings:layout="@layout/everest_dashboard_preference_middle"
+        android:icon="@drawable/kernel"
+        settings:layout="@layout/everest_dashboard_preference_top"
         settings:enableCopying="true"
         settings:controller="com.android.settings.deviceinfo.firmwareversion.KernelVersionPreferenceController"/>
 
@@ -100,6 +107,7 @@
     <Preference 
         android:key="build_date"
         android:title="@string/build_date"
+        android:icon="@drawable/date"
         android:summary="@string/build_date_default"
         settings:layout="@layout/everest_dashboard_preference_bottom"
         settings:enableCopying="true"
