@@ -1,6 +1,7 @@
 /*
  * Copyright (C) 2020 Wave-OS
  * Copyright (C) 2021 ShapeShiftOS
+ * Copyright (C) 2024 SuperiorExtended-OS
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -17,7 +18,6 @@
 
 package com.android.settings.deviceinfo.aboutphone;
 
-import java.io.IOException;
 import android.content.Context;
 import android.os.SystemProperties;
 import android.widget.TextView;
@@ -28,8 +28,6 @@ import com.android.settings.R;
 import com.android.settings.utils.EverestSpecUtils;
 import com.android.settingslib.core.AbstractPreferenceController;
 import com.android.settingslib.widget.LayoutPreference;
-import com.android.settingslib.Utils;
-import com.android.settings.core.PreferenceControllerMixin;
 
 public class EverestInfoPreferenceController extends AbstractPreferenceController {
 
@@ -43,14 +41,20 @@ public class EverestInfoPreferenceController extends AbstractPreferenceControlle
     public void displayPreference(PreferenceScreen screen) {
         super.displayPreference(screen);
         final LayoutPreference everestInfoPreference = screen.findPreference(KEY_EVEREST_INFO);
-        final TextView processor = (TextView) everestInfoPreference.findViewById(R.id.processor_message);
-        final TextView storage = (TextView) everestInfoPreference.findViewById(R.id.storage_code_message);
-        final TextView battery = (TextView) everestInfoPreference.findViewById(R.id.battery_type_message);
-        final TextView infoScreen = (TextView) everestInfoPreference.findViewById(R.id.screen_message);
-        processor.setText(EverestSpecUtils.getProcessorModel());
-        storage.setText(String.valueOf(EverestSpecUtils.getTotalInternalMemorySize()) + "GB ROM | " + EverestSpecUtils.getTotalRAM() + " RAM");
-        battery.setText(EverestSpecUtils.getBatteryCapacity(mContext) + " mAh");
-        infoScreen.setText(EverestSpecUtils.getScreenRes(mContext));
+
+        if (everestInfoPreference != null) {
+            final TextView processor = everestInfoPreference.findViewById(R.id.processor_message);
+            final TextView storageAndRAM = everestInfoPreference.findViewById(R.id.storage_code_message);
+            final TextView battery = everestInfoPreference.findViewById(R.id.battery_type_message);
+            final TextView infoScreen = everestInfoPreference.findViewById(R.id.screen_message);
+
+            Context context = everestInfoPreference.getContext();
+
+            processor.setText(EverestSpecUtils.getProcessorModel(context));
+            storageAndRAM.setText(EverestSpecUtils.getStorageAndRAMInfo(context));
+            battery.setText(EverestSpecUtils.getBatteryInfo(context));
+            infoScreen.setText(EverestSpecUtils.getScreenRes(context));
+        }
     }
 
     @Override

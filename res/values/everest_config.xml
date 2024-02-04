@@ -56,4 +56,11 @@
 
     <!-- Whether to enable Lineage Fast Charge Prefernece -->
     <bool name="config_lineageFastChargeSupported">false</bool>
+    
+    <!-- Custom info -->
+     <string name="CUSTOM_CPU_MODEL"></string>
+     <string name="CUSTOM_SCREEN_RESOLUTION"></string>
+     <string name="CUSTOM_BATTERY_INFO"></string>
+     <string name="CUSTOM_STORAGE_INFO"></string>
+     <string name="CUSTOM_RAM_INFO"></string>
 </resources>
