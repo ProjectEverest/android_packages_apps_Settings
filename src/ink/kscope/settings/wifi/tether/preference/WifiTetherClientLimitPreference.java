@@ -17,9 +17,9 @@
 package ink.kscope.settings.wifi.tether.preference;
 
 import android.content.Context;
-import android.widget.SeekBar;
 import android.util.AttributeSet;
 import android.view.View;
+import android.widget.SeekBar;
 
 import com.android.settings.R;
 import com.android.settings.SeekBarDialogPreference;
@@ -71,7 +71,7 @@ public class WifiTetherClientLimitPreference extends SeekBarDialogPreference imp
 
     private String getSummaryForValue(int value) {
         return mContext.getResources().getQuantityString(
-            R.plurals.wifi_hotspot_client_limit_summary, value, value);
+                R.plurals.wifi_hotspot_client_limit_summary, value, value);
     }
 
     public void setMin(int min) {

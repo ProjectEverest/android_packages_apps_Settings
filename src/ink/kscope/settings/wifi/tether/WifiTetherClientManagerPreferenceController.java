@@ -16,7 +16,6 @@
 
 package ink.kscope.settings.wifi.tether;
 
-import android.annotation.NonNull;
 import android.content.Context;
 import android.net.MacAddress;
 import android.net.wifi.SoftApCapability;
@@ -30,8 +29,6 @@ import com.android.settings.R;
 import com.android.settings.core.FeatureFlags;
 import com.android.settings.wifi.tether.WifiTetherBasePreferenceController;
 
-import java.util.List;
-
 public class WifiTetherClientManagerPreferenceController extends WifiTetherBasePreferenceController
         implements WifiManager.SoftApCallback {
 
@@ -41,9 +38,8 @@ public class WifiTetherClientManagerPreferenceController extends WifiTetherBaseP
     private boolean mSupportForceDisconnect;
 
     public WifiTetherClientManagerPreferenceController(Context context,
-            WifiTetherBasePreferenceController.OnTetherConfigUpdateListener listener) {
+                                                       WifiTetherBasePreferenceController.OnTetherConfigUpdateListener listener) {
         super(context, listener);
-
         mWifiManager.registerSoftApCallback(context.getMainExecutor(), this);
     }
 
@@ -54,10 +50,9 @@ public class WifiTetherClientManagerPreferenceController extends WifiTetherBaseP
     }
 
     @Override
-    public void onCapabilityChanged(@NonNull SoftApCapability softApCapability) {
-        mSupportForceDisconnect =
-                softApCapability.areFeaturesSupported(
-                    SoftApCapability.SOFTAP_FEATURE_CLIENT_FORCE_DISCONNECT);
+    public void onCapabilityChanged(SoftApCapability softApCapability) {
+        mSupportForceDisconnect = softApCapability.areFeaturesSupported(
+                SoftApCapability.SOFTAP_FEATURE_CLIENT_FORCE_DISCONNECT);
         mWifiManager.unregisterSoftApCallback(this);
         updateDisplay();
     }
@@ -65,11 +60,9 @@ public class WifiTetherClientManagerPreferenceController extends WifiTetherBaseP
     @Override
     public void updateDisplay() {
         if (mPreference != null) {
-            if (mSupportForceDisconnect) {
-                mPreference.setSummary(R.string.wifi_hotspot_client_manager_summary);
-            } else {
-                mPreference.setSummary(R.string.wifi_hotspot_client_manager_list_only_summary);
-            }
+            mPreference.setSummary(mSupportForceDisconnect
+                    ? R.string.wifi_hotspot_client_manager_summary
+                    : R.string.wifi_hotspot_client_manager_list_only_summary);
         }
     }
 
@@ -79,11 +72,15 @@ public class WifiTetherClientManagerPreferenceController extends WifiTetherBaseP
     }
 
     public void updateConfig(SoftApConfiguration.Builder builder) {
-        if (builder == null || !mSupportForceDisconnect) return;
-        final SoftApConfiguration softApConfiguration = mWifiManager.getSoftApConfiguration();
-        final int maxNumberOfClients = softApConfiguration.getMaxNumberOfClients();
-        final List<MacAddress> blockedClientList = softApConfiguration.getBlockedClientList();
+        if (builder != null && mSupportForceDisconnect) {
+            configureSoftApConfiguration(builder);
+        }
+    }
+
+    private void configureSoftApConfiguration(SoftApConfiguration.Builder builder) {
+        SoftApConfiguration softApConfiguration = mWifiManager.getSoftApConfiguration();
+        int maxNumberOfClients = softApConfiguration.getMaxNumberOfClients();
         builder.setMaxNumberOfClients(maxNumberOfClients)
-                .setBlockedClientList(blockedClientList);
+                .setBlockedClientList(softApConfiguration.getBlockedClientList());
     }
 }

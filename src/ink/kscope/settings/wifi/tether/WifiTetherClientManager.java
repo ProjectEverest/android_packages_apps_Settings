@@ -33,22 +33,20 @@ import android.text.TextUtils;
 import androidx.preference.Preference;
 import androidx.preference.PreferenceCategory;
 
-import java.util.ArrayList;
-import java.util.Collection;
-import java.util.List;
-
 import com.android.settings.R;
 import com.android.settings.SettingsPreferenceFragment;
 import com.android.settingslib.widget.FooterPreference;
 
 import ink.kscope.settings.wifi.tether.preference.WifiTetherClientLimitPreference;
 
+import java.util.Collection;
+import java.util.List;
+
 public class WifiTetherClientManager extends SettingsPreferenceFragment implements
         Preference.OnPreferenceChangeListener, Preference.OnPreferenceClickListener,
         WifiManager.SoftApCallback, TetheringManager.TetheringEventCallback {
 
     private static final String TAG = "WifiTetherClientManager";
-
     private static final String PREF_KEY_CLIENT_LIMIT = "client_limit";
     private static final String PREF_KEY_BLOCKED_CLIENT_LIST = "blocked_client_list";
     private static final String PREF_KEY_CONNECTED_CLIENT_LIST = "connected_client_list";
@@ -67,14 +65,18 @@ public class WifiTetherClientManager extends SettingsPreferenceFragment implemen
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        initializeDependencies();
+        setupPreferences();
+    }
 
+    private void initializeDependencies() {
         mWifiManager = getSystemService(WifiManager.class);
         mTetheringManager = getSystemService(TetheringManager.class);
-
         mWifiManager.registerSoftApCallback(getActivity().getMainExecutor(), this);
+    }
 
+    private void setupPreferences() {
         addPreferencesFromResource(R.xml.hotspot_client_manager);
-
         getActivity().setTitle(R.string.wifi_hotspot_client_manager_title);
 
         mClientLimitPref = findPreference(PREF_KEY_CLIENT_LIMIT);
@@ -85,138 +87,166 @@ public class WifiTetherClientManager extends SettingsPreferenceFragment implemen
         mClientLimitPref.setOnPreferenceChangeListener(this);
 
         updateBlockedClients();
-        updatePreferenceVisible();
+        updatePreferenceVisibility();
     }
 
     @Override
     public void onCapabilityChanged(@NonNull SoftApCapability softApCapability) {
-        mSupportForceDisconnect =
-                softApCapability.areFeaturesSupported(
-                    SoftApCapability.SOFTAP_FEATURE_CLIENT_FORCE_DISCONNECT);
+        mSupportForceDisconnect = softApCapability.areFeaturesSupported(
+                SoftApCapability.SOFTAP_FEATURE_CLIENT_FORCE_DISCONNECT);
         mWifiManager.unregisterSoftApCallback(this);
 
         if (mSupportForceDisconnect) {
-            mClientLimitPref.setMin(1);
-            mClientLimitPref.setMax(softApCapability.getMaxSupportedClients());
-            final SoftApConfiguration softApConfiguration = mWifiManager.getSoftApConfiguration();
-            final int maxNumberOfClients = softApConfiguration.getMaxNumberOfClients();
-            mClientLimitPref.setValue(maxNumberOfClients, false);
+            configureClientLimitPreference(softApCapability);
         }
-        updatePreferenceVisible();
+
+        updatePreferenceVisibility();
     }
 
-    private void updatePreferenceVisible() {
-        if (mBlockedClientsPref == null || mClientLimitPref == null ||
-                mConnectedClientsPref == null || mFooterPref == null) return;
-        boolean hasConnectedClient = mConnectedClientsPref.getPreferenceCount() > 0;
-        boolean hasBlockedClient = mBlockedClientsPref.getPreferenceCount() > 0;
-        mClientLimitPref.setVisible(mSupportForceDisconnect);
-        mBlockedClientsPref.setVisible(mSupportForceDisconnect && hasBlockedClient);
-        mConnectedClientsPref.setVisible(hasConnectedClient);
-        mFooterPref.setVisible(!hasBlockedClient && !hasConnectedClient);
+    private void configureClientLimitPreference(SoftApCapability softApCapability) {
+        mClientLimitPref.setMin(1);
+        mClientLimitPref.setMax(softApCapability.getMaxSupportedClients());
+        configureClientLimitValue();
+    }
+
+    private void configureClientLimitValue() {
+        final SoftApConfiguration softApConfiguration = mWifiManager.getSoftApConfiguration();
+        final int maxNumberOfClients = softApConfiguration.getMaxNumberOfClients();
+        mClientLimitPref.setValue(maxNumberOfClients, false);
     }
 
     private void updateBlockedClients() {
         final SoftApConfiguration softApConfiguration = mWifiManager.getSoftApConfiguration();
         final List<MacAddress> blockedClientList = softApConfiguration.getBlockedClientList();
         mBlockedClientsPref.removeAll();
+
         for (MacAddress mac : blockedClientList) {
-            BlockedClientPreference preference = new BlockedClientPreference(getActivity(), mac);
-            preference.setOnPreferenceClickListener(this);
-            mBlockedClientsPref.addPreference(preference);
+            addBlockedClientPreference(mac);
         }
-        updatePreferenceVisible();
+
+        updatePreferenceVisibility();
+    }
+
+    private void addBlockedClientPreference(MacAddress mac) {
+        BlockedClientPreference preference = new BlockedClientPreference(getActivity(), mac);
+        preference.setOnPreferenceClickListener(this);
+        mBlockedClientsPref.addPreference(preference);
     }
 
     @Override
     public void onClientsChanged(Collection<TetheredClient> clients) {
         mConnectedClientsPref.removeAll();
+
         for (TetheredClient client : clients) {
-            if (client.getTetheringType() != TetheringManager.TETHERING_WIFI) {
-                continue;
+            if (client.getTetheringType() == TetheringManager.TETHERING_WIFI) {
+                addConnectedClientPreference(client);
             }
-            ConnectedClientPreference preference =
-                new ConnectedClientPreference(getActivity(), client);
-            preference.setOnPreferenceClickListener(this);
-            mConnectedClientsPref.addPreference(preference);
         }
-        updatePreferenceVisible();
+
+        updatePreferenceVisibility();
+    }
+
+    private void addConnectedClientPreference(TetheredClient client) {
+        ConnectedClientPreference preference = new ConnectedClientPreference(getActivity(), client);
+        preference.setOnPreferenceClickListener(this);
+        mConnectedClientsPref.addPreference(preference);
     }
 
     @Override
     public boolean onPreferenceClick(Preference preference) {
         if (mSupportForceDisconnect) {
-            if (preference instanceof ConnectedClientPreference) {
-                showBlockClientDialog(
-                    ((ConnectedClientPreference)preference).getMacAddress(),
-                    preference.getTitle());
-                return true;
-            } else if (preference instanceof BlockedClientPreference) {
-                showUnblockClientDialog(((BlockedClientPreference)preference).getMacAddress());
-                return true;
-            }
+            handleClientPreferenceClick(preference);
+            return true;
         }
         return super.onPreferenceTreeClick(preference);
+    }
+
+    private void handleClientPreferenceClick(Preference preference) {
+        if (preference instanceof ConnectedClientPreference) {
+            showBlockClientDialog(
+                    ((ConnectedClientPreference) preference).getMacAddress(),
+                    preference.getTitle());
+        } else if (preference instanceof BlockedClientPreference) {
+            showUnblockClientDialog(((BlockedClientPreference) preference).getMacAddress());
+        }
     }
 
     @Override
     public boolean onPreferenceChange(Preference preference, Object newValue) {
         if (preference == mClientLimitPref) {
-            int value = (int) newValue;
-            SoftApConfiguration softApConfiguration = mWifiManager.getSoftApConfiguration();
-            SoftApConfiguration newSoftApConfiguration =
-                    new SoftApConfiguration.Builder(softApConfiguration)
-                            .setMaxNumberOfClients(value)
-                            .build();
-            return mWifiManager.setSoftApConfiguration(newSoftApConfiguration);
+            handleClientLimitChange(newValue);
+            return true;
         }
         return false;
     }
-
+    
     private void blockClient(MacAddress mac, boolean isBlock) {
-        final SoftApConfiguration softApConfiguration = mWifiManager.getSoftApConfiguration();
-        final List<MacAddress> blockedClientList = softApConfiguration.getBlockedClientList();
-        if (isBlock) {
-            if (blockedClientList.contains(mac)) return;
+    final SoftApConfiguration softApConfiguration = mWifiManager.getSoftApConfiguration();
+    final List<MacAddress> blockedClientList = softApConfiguration.getBlockedClientList();
+    
+    if (isBlock) {
+        if (!blockedClientList.contains(mac)) {
             blockedClientList.add(mac);
-        } else {
-            if (!blockedClientList.contains(mac)) return;
-            blockedClientList.remove(mac);
         }
-        SoftApConfiguration newSoftApConfiguration =
-                new SoftApConfiguration.Builder(softApConfiguration)
-                        .setBlockedClientList(blockedClientList)
-                        .build();
+    } else {
+        blockedClientList.remove(mac);
+    }
+
+    SoftApConfiguration newSoftApConfiguration =
+            new SoftApConfiguration.Builder(softApConfiguration)
+                    .setBlockedClientList(blockedClientList)
+                    .build();
+    
+    	mWifiManager.setSoftApConfiguration(newSoftApConfiguration);
+    		updateBlockedClients();
+    }
+
+    private void handleClientLimitChange(Object newValue) {
+        int value = (int) newValue;
+        SoftApConfiguration softApConfiguration = mWifiManager.getSoftApConfiguration();
+        SoftApConfiguration newSoftApConfiguration = new SoftApConfiguration.Builder(softApConfiguration)
+                .setMaxNumberOfClients(value)
+                .build();
         mWifiManager.setSoftApConfiguration(newSoftApConfiguration);
-        updateBlockedClients();
+    }
+
+    private void updatePreferenceVisibility() {
+        if (mBlockedClientsPref == null || mClientLimitPref == null ||
+                mConnectedClientsPref == null || mFooterPref == null) {
+            return;
+        }
+
+        boolean hasConnectedClient = mConnectedClientsPref.getPreferenceCount() > 0;
+        boolean hasBlockedClient = mBlockedClientsPref.getPreferenceCount() > 0;
+
+        mClientLimitPref.setVisible(mSupportForceDisconnect);
+        mBlockedClientsPref.setVisible(mSupportForceDisconnect && hasBlockedClient);
+        mConnectedClientsPref.setVisible(hasConnectedClient);
+        mFooterPref.setVisible(!hasBlockedClient && !hasConnectedClient);
     }
 
     private void showBlockClientDialog(MacAddress mac, CharSequence deviceName) {
         final Activity activity = getActivity();
         new AlertDialog.Builder(activity)
-            .setTitle(R.string.wifi_hotspot_block_client_dialog_title)
-            .setMessage(activity.getString(
-                R.string.wifi_hotspot_block_client_dialog_text, deviceName))
-            .setPositiveButton(android.R.string.ok,
-                (dialog, which) -> {
-                    blockClient(mac, true);
-                })
-            .setNegativeButton(android.R.string.cancel, null)
-            .create().show();
+                .setTitle(R.string.wifi_hotspot_block_client_dialog_title)
+                .setMessage(activity.getString(
+                        R.string.wifi_hotspot_block_client_dialog_text, deviceName))
+                .setPositiveButton(android.R.string.ok,
+                        (dialog, which) -> blockClient(mac, true))
+                .setNegativeButton(android.R.string.cancel, null)
+                .create().show();
     }
 
     private void showUnblockClientDialog(MacAddress mac) {
         final Activity activity = getActivity();
         new AlertDialog.Builder(activity)
-            .setTitle(R.string.wifi_hotspot_unblock_client_dialog_title)
-            .setMessage(activity.getString(
-                R.string.wifi_hotspot_unblock_client_dialog_text, mac.toString()))
-            .setPositiveButton(android.R.string.ok,
-                (dialog, which) -> {
-                    blockClient(mac, false);
-                })
-            .setNegativeButton(android.R.string.cancel, null)
-            .create().show();
+                .setTitle(R.string.wifi_hotspot_unblock_client_dialog_title)
+                .setMessage(activity.getString(
+                        R.string.wifi_hotspot_unblock_client_dialog_text, mac.toString()))
+                .setPositiveButton(android.R.string.ok,
+                        (dialog, which) -> blockClient(mac, false))
+                .setNegativeButton(android.R.string.cancel, null)
+                .create().show();
     }
 
     @Override
@@ -241,25 +271,31 @@ public class WifiTetherClientManager extends SettingsPreferenceFragment implemen
 
         public ConnectedClientPreference(Context context, TetheredClient client) {
             super(context);
+            initializeConnectedClientPreference(client);
+        }
+
+        private void initializeConnectedClientPreference(TetheredClient client) {
             mMacAddress = client.getMacAddress();
-
-            String hostName = null;
-            String macAddress = client.getMacAddress().toString();
-
-            for (TetheredClient.AddressInfo addressInfo : client.getAddresses()) {
-                if (!TextUtils.isEmpty(addressInfo.getHostname())) {
-                    hostName = addressInfo.getHostname();
-                    break;
-                }
-            }
+            String hostName = getHostNameFromClient(client);
+            String macAddress = mMacAddress.toString();
 
             setKey(macAddress);
+
             if (!TextUtils.isEmpty(hostName)) {
                 setTitle(hostName);
                 setSummary(macAddress);
             } else {
                 setTitle(macAddress);
             }
+        }
+
+        private String getHostNameFromClient(TetheredClient client) {
+            for (TetheredClient.AddressInfo addressInfo : client.getAddresses()) {
+                if (!TextUtils.isEmpty(addressInfo.getHostname())) {
+                    return addressInfo.getHostname();
+                }
+            }
+            return null;
         }
 
         public MacAddress getMacAddress() {
